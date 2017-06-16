@@ -12,7 +12,25 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
+        setupContainer()
+        
+    }
+    
+    func setupContainer() {
+        view.backgroundColor = UIColor(red: 50/255, green: 70/255, blue: 150/255, alpha: 1)
+        let inputContainer = UIView()
+        inputContainer.backgroundColor = UIColor.white
+        view.addSubview(inputContainer)
+        inputContainer.translatesAutoresizingMaskIntoConstraints =  false
+        inputContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        inputContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        inputContainer.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
+        inputContainer.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        inputContainer.layer.cornerRadius = 5
+        inputContainer.layer.masksToBounds = true
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UICollectionViewController {
+class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,8 +17,7 @@ class ViewController: UICollectionViewController {
     }
 
     func logout() {
-        present(LoginViewController, animated: true, completion: nil)
+        let newController = LoginViewController()
+        self.present(newController, animated: true, completion: nil)
     }
-    
 }
-

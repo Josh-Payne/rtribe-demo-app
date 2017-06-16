@@ -1,0 +1,15 @@
+source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/foundry/Specs.git'
+
+platform :ios, '10.0'
+
+
+# Uncomment this line if you're using Swift
+use_frameworks!
+
+
+target 'demo-app' do
+    pod 'Alamofire', '~> 4.4'
+    pod 'SwiftyJSON'
+end
+
