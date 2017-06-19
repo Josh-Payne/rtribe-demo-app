@@ -385,6 +385,7 @@
 				FA3A5A221EF234B90084A828 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
