@@ -8,8 +8,9 @@ platform :ios, '10.0'
 use_frameworks!
 
 
-target 'Apfyt' do
+target 'demo-app' do
     pod 'Alamofire', '~> 4.4'
     pod 'SwiftyJSON'
+    pod 'Locksmith'
 end
 
