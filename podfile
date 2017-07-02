@@ -11,5 +11,6 @@ use_frameworks!
 target 'demo-app' do
     pod 'Alamofire', '~> 4.4'
     pod 'SwiftyJSON'
+    pod 'KeychainSwift', '~> 8.0'
 end
 
