@@ -9,40 +9,43 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-import KeychainSwift
-
+import Security
 
 class LoginViewController: UIViewController {
-    var authtoken = String();
-    let keychain = KeychainSwift()
+    
+    struct User {
+        let id: Int
+        let email: String
+        let auth_token: String
+        let created_at: Int64
+        let updated_at: Int64
+    }
+    
+    var userResponse = LoginViewController.User.init(id: 0, email: "", auth_token: "", created_at: 0, updated_at: 0);
     var toggleSelected = 0;
     var inputContainerHeightConstraint: NSLayoutConstraint?
     var nameHeightConstraint: NSLayoutConstraint?
     var emailHeightConstraint: NSLayoutConstraint?
-    var baseURL: String = "https://ios-starter-backend.herokuapp.com/"
+    let baseURL = "https://ios-starter-backend.herokuapp.com"
     var params = Dictionary<String, String>();
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (keychain.get(emailTF.text!) == nil) {
+        
+        if userResponse.auth_token == "" {
             setupContainer()
-        }
-        else {
+        } else {
             segueToProducts()
         }
-    }
-    
-    func segueToProducts() {
-        let productsVC = ProductsViewController()
-        self.navigationController?.present(productsVC, animated: true, completion: nil)
     }
     
     func gatherLoginInfo() {
         if (isValidEmail(emailStr: emailTF.text!) && passwordTF.text != "") {
             if (toggleSelected == 0) {
-                postToDB(dbURL: "api/v1/users/sign_up")
+                postToDB(dbURL: "/api/v1/users/sign_up")
             }
             if (toggleSelected == 1) {
-                postToDB(dbURL: "api/v1/users/sign_in")
+                postToDB(dbURL: "/api/v1/users/sign_in")
             }
         }
     }
@@ -56,23 +59,24 @@ class LoginViewController: UIViewController {
             response in let _:Error? //error handled with .failure case
             switch response.result {
             case .success(let json):
-                print(json)
                 let parseable = JSON(json)
-                self.keychain.set(self.passwordTF.text!, forKey: parseable["auth_token"].stringValue)
-                // update UI on main thread
-                DispatchQueue.main.async {
-                    let alertController = UIAlertController(title: "Welcome!", message: nil, preferredStyle: .alert);
-                    alertController.addAction(UIAlertAction(title: "Thanks!", style: .default,handler: nil));
+                self.userResponse = User(id: parseable["user"]["id"].intValue, email: parseable["user"]["email"].stringValue, auth_token: parseable["user"]["auth_token"].stringValue, created_at: parseable["user"]["created_at"].int64Value, updated_at: parseable["user"]["updated_at"].int64Value)
+                if self.userResponse.auth_token != "" {
+                    let alertController = UIAlertController(title: "Welcome!", message: nil, preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "Thanks!", style: .default, handler: nil))
+                    self.present(alertController, animated: true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
+                    self.segueToProducts()
+                }
+                else {
+                    let alertController = UIAlertController(title: "Something went wrong!", message: nil, preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "Retry", style: .default, handler: nil))
                     self.present(alertController, animated: true, completion: nil)
                 }
             case .failure(let error):
                 print(error)
             }
         }
-    }
-    
-    func keyStore() {
-        //try Locksmith.saveData(["auth_token": "authtoken"], forUserAccount: params)
     }
     
     func isValidEmail(emailStr:String) -> Bool {
@@ -198,6 +202,12 @@ class LoginViewController: UIViewController {
         loginRegisterButton.topAnchor.constraint(equalTo: inputContainer.bottomAnchor, constant: 12).isActive = true
         loginRegisterButton.widthAnchor.constraint(equalTo: inputContainer.widthAnchor).isActive = true
         loginRegisterButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+    
+    func segueToProducts() {
+        let productsVC = ProductsViewController()
+        productsVC.userToken = userResponse.auth_token
+        self.present(productsVC, animated: true, completion: nil)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

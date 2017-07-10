@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     }
 
     func logout() {
-        let newController = LoginViewController()
+        let newController = ProductsViewController()
         self.present(newController, animated: true, completion: nil)
     }
 }
