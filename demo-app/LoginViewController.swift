@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-import Security
 
 class LoginViewController: UIViewController {
     
@@ -63,10 +62,11 @@ class LoginViewController: UIViewController {
                 self.userResponse = User(id: parseable["user"]["id"].intValue, email: parseable["user"]["email"].stringValue, auth_token: parseable["user"]["auth_token"].stringValue, created_at: parseable["user"]["created_at"].int64Value, updated_at: parseable["user"]["updated_at"].int64Value)
                 if self.userResponse.auth_token != "" {
                     let alertController = UIAlertController(title: "Welcome!", message: nil, preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "Thanks!", style: .default, handler: nil))
+                    let segueAction = UIAlertAction(title: "Products", style: .default) { action in
+                        self.segueToProducts()
+                    }
+                    alertController.addAction(segueAction)
                     self.present(alertController, animated: true, completion: nil)
-                    self.dismiss(animated: true, completion: nil)
-                    self.segueToProducts()
                 }
                 else {
                     let alertController = UIAlertController(title: "Something went wrong!", message: nil, preferredStyle: .alert)
