@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>AlamofireImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>KeychainSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,17 +37,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>67F1C2213EED075E4AFBE5ACCEC112F9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>80534FBDD3FB63DC5EE9EB4157BA5B10</key>
+		<key>75BFB1C5A311D8DE9DF66206DFC3E70F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9EFE4C70245EE2857D336B8B9FA4E825</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E7917EC9CF14268FEDCCE93388ACDCEB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
